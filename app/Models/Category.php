@@ -13,7 +13,8 @@ class Category extends Model
 
     protected $fillable = ['title', 'slug'];
 
-    public function courses(){
-        return $this->hasMany('App\Models\Courses');
+    public function courses()
+    {
+        return $this->hasMany('App\Models\Course');
     }
 }

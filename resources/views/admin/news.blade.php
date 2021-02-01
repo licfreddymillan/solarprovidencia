@@ -46,15 +46,15 @@
             bInfo: false,
             pageLength: 10,
             buttons: [{
-                text: "<i class='feather icon-plus'></i> Nuevo Curso",
+                text: "<i class='feather icon-plus'></i> Nueva Noticia",
                 action: function() {
                     $(this).removeClass("btn-secondary")
                     $(".add-new-data").addClass("show");
                     $(".overlay-bg").addClass("show");
-                    $("#edit-course").css('display', 'none');
-                    $("#new-course").css('display', 'block');
+                    $("#edit-new").css('display', 'none');
+                    $("#new-new").css('display', 'block');
                     $("#overlay-text").empty();
-                    $("#overlay-text").append('Nuevo Curso');
+                    $("#overlay-text").append('Nueva Noticia');
                 },
                 className: "btn-outline-primary"
             }],
@@ -83,31 +83,26 @@
             $("#data-category, #data-status").prop("selectedIndex", 0)
         })
 
-        $(".edit-course").on("click", function() {
-            var curso = $.parseJSON($(this).attr('data-course'));
+        $(".edit-new").on("click", function() {
+            var noticia = $.parseJSON($(this).attr('data-new'));
+            console.log(noticia);
             $(".add-new-data").addClass("show")
             $(".overlay-bg").addClass("show")
-            $("#new-course").css('display', 'none');
-            $("#edit-course").css('display', 'block');
+            $("#new-new").css('display', 'none');
+            $("#edit-new").css('display', 'block');
             $("#overlay-text").empty();
-            $("#overlay-text").append('Editar Curso');
-            $("#title").val(curso.title);
-            $("#subtitle").val(curso.subtitle);
-            CKEDITOR.instances["description"].setData(curso.description);
-            $("#price").val(curso.price);
-            $("#duration").val(curso.duration);
-            $("#category_id option[value=" + curso.category_id + "]").attr("selected", true);
-            $("#level option[value=" + curso.level + "]").attr("selected", true);
-            $("#language option[value=" + curso.language + "]").attr("selected", true);
-            $("#status option[value=" + curso.status + "]").attr("selected", true);
-            $("#course_id").val(curso.id);
+            $("#overlay-text").append('Editar Noticia');
+            $("#title").val(noticia.title);
+            CKEDITOR.instances["description"].setData(noticia.description);
+            $("#status option[value=" + noticia.status + "]").attr("selected", true);
+            $("#new_id").val(noticia.id);
         });
 
-        $('.delete-course').on('click', function(e) {
+        $('.delete-new').on('click', function(e) {
             //e.preventDefault();
             var course_id = $(this).attr('data-id');
             Swal.fire({
-                title: '¿Estás seguro de borrar el curso?',
+                title: '¿Estás seguro de borrar la noticia?',
                 text: "¡Este cambio no puede ser revertido!",
                 type: 'warning',
                 showCancelButton: true,
@@ -133,7 +128,7 @@
 @if (Session::has('store-msj'))
 <script>
     $(document).ready(function() {
-        toastr.success('El curso ha sido creado con éxito', {
+        toastr.success('La noticia ha sido creada con éxito', {
             "closeButton": true
         });
     });
@@ -142,7 +137,7 @@
 @if (Session::has('update-msj'))
 <script>
     $(document).ready(function() {
-        toastr.success('El curso ha sido modificado con éxito', {
+        toastr.success('La noticia ha sido modificada con éxito', {
             "closeButton": true
         });
     });
@@ -151,7 +146,7 @@
 @if (Session::has('delete-msj'))
 <script>
     $(document).ready(function() {
-        toastr.success('El curso ha sido eliminado con éxito', {
+        toastr.success('La noticia ha sido eliminada con éxito', {
             "closeButton": true
         });
     });
@@ -165,36 +160,29 @@
                 <tr>
                     <th>Portada</th>
                     <th>Título</th>
-                    <th>Categoría</th>
-                    <th>Nivel</th>
-                    <th>Idioma</th>
+                    <th>Descripción</th>
                     <th>Estado</th>
-                    <th>Precio</th>
                     <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($cursos as $curso)
+                @foreach ($noticias as $noticia)
                 <tr>
-                    <td class="product-img"><img src="{{ asset('uploads/images/courses/'.$curso->cover) }}" alt="{{ $curso->title }}" style="width: 150px; height: 100px;">
+                    <td class="product-img"><img src="{{ asset('uploads/images/news/'.$noticia->image) }}" alt="{{ $noticia->title }}" style="width: 150px; height: 100px;">
                     </td>
-                    <td class="product-name">{{ $curso->title }}</td>
-                    <td class="product-category">{{ $curso->category->title }}</td>
-                    <td class="product-category">{{ $curso->level }}</td>
-                    <td class="product-category">{{ $curso->language }}</td>
+                    <td class="product-name">{{ $noticia->title }}</td>
+                    <td class="product-category">{!! substr($noticia->description, 0, 300) !!}...</td>
                     <td>
-                        <div @if ($curso->status == 0) class="chip chip-warning" @else class="chip chip-success" @endif>
+                        <div @if ($noticia->status == 0) class="chip chip-warning" @else class="chip chip-success" @endif>
                             <div class="chip-body">
-                                <div class="chip-text">@if ($curso->status == 0) No Disponible @else Disponible @endif</div>
+                                <div class="chip-text">@if ($noticia->status == 0) No Disponible @else Disponible @endif</div>
                             </div>
                         </div>
                     </td>
-                    <td class="product-price">${{ $curso->price }}</td>
                     <td class="product-action">
-                        <span style="font-size: 20px;"><a href="javascript:;" class="edit-course" data-course="{{$curso}}" title="Editar"><i class="feather icon-edit"></i></a></span>
-                        <span style="font-size: 20px;"><a href="{{ route('admin.courses.lessons', $curso->id) }}" title="Ver Lecciones"><i class="feather icon-search"></i></a></span>
-                        <span style="font-size: 20px;"><a href="javascript:;" class="delete-course" data-id="{{ $curso->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
-                        <a href="{{ route('admin.courses.delete', $curso->id) }}" id="delete-link-{{$curso->id}}"></a>
+                        <span style="font-size: 20px;"><a href="javascript:;" class="edit-new" data-new="{{$noticia}}" title="Editar"><i class="feather icon-edit"></i></a></span>
+                        <span style="font-size: 20px;"><a href="javascript:;" class="delete-new" data-id="{{ $noticia->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
+                        <a href="{{ route('admin.news.delete', $noticia->id) }}" id="delete-link-{{$noticia->id}}"></a>
                     </td>
                 </tr>
                 @endforeach
@@ -215,8 +203,8 @@
                     <i class="feather icon-x"></i>
                 </div>
             </div>
-            <div id="new-course" style="height: 90%; overflow-y: scroll;">
-                <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data">
+            <div id="new-new" style="height: 90%; overflow-y: scroll;">
+                <form action="{{ route('admin.news.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="data-items pb-3" style="height: auto;">
                         <div class="data-fields px-2">
@@ -226,57 +214,19 @@
                                     <input type="text" class="form-control" name="title" required>
                                 </div>
                                 <div class="col-sm-12 data-field-col">
-                                    <label for="subtitle">Subtítulo</label>
-                                    <input type="text" class="form-control" name="subtitle" required>
-                                </div>
-                                <div class="col-sm-12 data-field-col">
                                     <label for="description">Descripción</label>
                                     <textarea class="ckeditor form-control" name="description" required></textarea>
                                 </div>
                                 <div class="col-sm-12 data-field-col">
-                                    <label for="category_id"> Categoría</label>
-                                    <select class="form-control" name="category_id" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        @foreach ($categorias as $categoria)
-                                        <option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="category_id"> Nivel</label>
-                                    <select class="form-control" name="level" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        <option value="Principiante">Principiante</option>
-                                        <option value="Intermedio">Intermedio</option>
-                                        <option value="Avanzado">Avanzado</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="category_id"> Idioma</label>
-                                    <select class="form-control" name="language" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        <option value="Español">Español</option>
-                                        <option value="Inglés">Inglés</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="price">Precio</label>
-                                    <input type="text" class="form-control" name="price" required>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="duration">Duración</label>
-                                    <input type="text" class="form-control" name="duration" required>
-                                </div>
-                                <div class="col-sm-12 data-field-col">
                                     <label for="cover">Portada</label>
-                                    <input type="file" class="form-control" name="cover" required>
+                                    <input type="file" class="form-control" name="image" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                         <div class="add-data-btn">
-                            <button type="submit" class="btn btn-primary">Crear Curso</button>
+                            <button type="submit" class="btn btn-primary">Crear Noticia</button>
                         </div>
                         <div class="cancel-data-btn">
                             <button class="btn btn-outline-danger">Cancelar</button>
@@ -284,10 +234,10 @@
                     </div>
                 </form>
             </div>
-            <div id="edit-course" style="display: none; height: 90%; overflow-y: scroll;">
-                <form action="{{ route('admin.courses.update') }}" method="POST" enctype="multipart/form-data">
+            <div id="edit-new" style="display: none; height: 90%; overflow-y: scroll;">
+                <form action="{{ route('admin.news.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" class="form-control" name="course_id" id="course_id">
+                    <input type="hidden" class="form-control" name="new_id" id="new_id">
                     <div class="data-items pb-3" style="height: auto;">
                         <div class="data-fields px-2">
                             <div class="row">
@@ -296,50 +246,12 @@
                                     <input type="text" class="form-control" name="title" id="title" required>
                                 </div>
                                 <div class="col-sm-12 data-field-col">
-                                    <label for="subtitle">Subtítulo</label>
-                                    <input type="text" class="form-control" name="subtitle" id="subtitle" required>
-                                </div>
-                                <div class="col-sm-12 data-field-col">
                                     <label for="description">Descripción</label>
                                     <textarea class="ckeditor form-control" name="description" id="description" required></textarea>
                                 </div>
                                 <div class="col-sm-12 data-field-col">
-                                    <label for="category_id"> Categoría</label>
-                                    <select class="form-control" id="category_id" name="category_id" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        @foreach ($categorias as $categoria)
-                                        <option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="category_id"> Nivel</label>
-                                    <select class="form-control" name="level" id="level" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        <option value="Principiante">Principiante</option>
-                                        <option value="Intermedio">Intermedio</option>
-                                        <option value="Avanzado">Avanzado</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="category_id"> Idioma</label>
-                                    <select class="form-control" name="language" id="language" required>
-                                        <option value="" selected disabled>Seleccione una opción...</option>
-                                        <option value="Español">Español</option>
-                                        <option value="Inglés">Inglés</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="price">Precio</label>
-                                    <input type="text" class="form-control" name="price" id="price" required>
-                                </div>
-                                <div class="col-sm-6 data-field-col">
-                                    <label for="duration">Duración</label>
-                                    <input type="text" class="form-control" name="duration" id="duration" required>
-                                </div>
-                                <div class="col-sm-12 data-field-col">
                                     <label for="duration">Portada</label>
-                                    <input type="file" class="form-control" name="cover" id="cover">
+                                    <input type="file" class="form-control" name="image" id="image">
                                 </div>
                                 <div class="col-sm-12 data-field-col">
                                     <label for="status"> Estado</label>
@@ -353,7 +265,7 @@
                     </div>
                     <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                         <div class="add-data-btn">
-                            <button type="submit" class="btn btn-primary">Modificar Curso</button>
+                            <button type="submit" class="btn btn-primary">Modificar Noticia</button>
                         </div>
                         <div class="cancel-data-btn">
                             <button class="btn btn-outline-danger">Cancelar</button>

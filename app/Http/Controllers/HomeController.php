@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\News;
 
 class HomeController extends Controller
 {
@@ -22,13 +23,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(){
+    public function index()
+    {
         return view('admin.index');
     }
 
-    public function home(){
+    public function home()
+    {
         $cursos = Course::get();
 
-        return view('user/home')->with(compact('cursos'));
+        $noticias = News::where('status', '=', 1)->orderBy('id', 'DESC')->get();
+
+        return view('user/home')->with(compact('cursos', 'noticias'));
     }
 }
