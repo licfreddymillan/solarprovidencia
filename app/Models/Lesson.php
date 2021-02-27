@@ -13,7 +13,12 @@ class Lesson extends Model
 
     protected $fillable = ['course_id', 'title', 'slug', 'subtitle', 'description', 'video', 'duration', 'status'];
 
-    public function category(){
+    public function course(){
     	return $this->belongsTo('App\Models\Course');
     }
+
+    public function users(){
+    	return $this->belongsToMany('App\Models\User', 'lessons_users', 'lesson_id', 'user_id')->withPivot('view_at');
+    }
+
 }

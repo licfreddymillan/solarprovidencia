@@ -14,16 +14,20 @@
             <li class="nav-item">
                 <a href="index.html"><i class="feather icon-home"></i><span class="menu-title">Inicio</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('admin.courses') }}"><i class="feather icon-shopping-cart"></i><span class="menu-title">Cursos</span></a></li>
+            <li class="nav-item"><a href="{{ route('admin.pending-class') }}"><i class="feather icon-video"></i><span class="menu-title">Clases Pendientes</span></a></li>
+            <li class="nav-item"><a href="{{ route('admin.courses') }}"><i class="feather icon-video"></i><span class="menu-title">Cursos</span></a></li>
+            <li class="nav-item"><a href="{{ route('admin.events') }}"><i class="feather icon-calendar"></i><span class="menu-title">Eventos</span></a></li>
             <li class="nav-item"><a href="{{ route('admin.news') }}"><i class="feather icon-message-square"></i><span class="menu-title">Noticias</span></a></li>
-            <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title" data-i18n="User">Usuarios</span></a>
+            <li class="nav-item"><a href="{{ route('admin.purchases.index') }}"><i class="feather icon-shopping-cart"></i><span class="menu-title">Historial de Compras</span></a></li>
+            <li class=" nav-item"><a href="#"><i class="feather icon-book"></i><span class="menu-title" data-i18n="User">Transferencias</span></a>
                 <ul class="menu-content">
-                    <li><a href="app-user-list.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Listado</span></a>
+                    <li><a href="{{ route('admin.transfers.pending') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="List">Pendientes</span></a>
                     </li>
-                    <li><a href="app-user-view.html"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Nuevo Usuario</span></a>
+                    <li><a href="{{ route('admin.transfers.index') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="View">Historial</span></a>
                     </li>
                 </ul>
             </li>
+            <li class="nav-item"><a href="{{ route('admin.users.index') }}"><i class="feather icon-user"></i><span class="menu-title">Listado de Usuarios</span></a></li>
         </ul>
     </div>
 </div>

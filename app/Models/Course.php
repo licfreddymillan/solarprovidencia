@@ -22,4 +22,18 @@ class Course extends Model
     {
         return $this->hasMany('App\Models\Lesson');
     }
+
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'courses_users', 'course_id', 'user_id')->withPivot('progress', 'finish', 'online_class', 'start_date', 'ending_date');
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany('App\Models\Transfer');
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany('App\Models\Purchase');
+    }
 }

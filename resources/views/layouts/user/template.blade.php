@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('eduhome/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('eduhome/css/responsive.css')}}">
     <script src="{{ asset('eduhome/js/vendor/modernizr-2.8.3.min.js')}}"></script>
+
+    @stack('styles')
 </head>
 
 <body>
@@ -101,6 +103,7 @@
     <!-- Footer End -->
 
     <script src="{{ asset('eduhome/js/vendor/jquery-1.12.0.min.js')}}"></script>
+    <script src="https://kit.fontawesome.com/d6f2727f64.js" crossorigin="anonymous"></script>
     <script src="{{ asset('eduhome/js/bootstrap.min.js')}}"></script>
     <script src="{{ asset('eduhome/js/jquery.meanmenu.js')}}"></script>
     <script src="{{ asset('eduhome/js/jquery.magnific-popup.js')}}"></script>
@@ -110,6 +113,8 @@
     <script src="{{ asset('eduhome/js/jquery.nicescroll.min.js')}}"></script>
     <script src="{{ asset('eduhome/js/plugins.js')}}"></script>
     <script src="{{ asset('eduhome/js/main.js')}}"></script>
+
+    @stack('scripts')
 </body>
 
 </html>
