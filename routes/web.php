@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('config:clear');
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
@@ -40,6 +47,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('store', [App\Http\Controllers\EventController::class, 'store'])->name('admin.events.store');
         Route::post('update', [App\Http\Controllers\EventController::class, 'update'])->name('admin.events.update');
         Route::get('delete/{id}', [App\Http\Controllers\EventController::class, 'destroy'])->name('admin.events.delete');
+        Route::get('subscribers/{id}', [App\Http\Controllers\EventController::class, 'subscribers'])->name('admin.events.subscribers');
+        Route::post('send-mail', [App\Http\Controllers\EventController::class, 'send_mail'])->name('admin.events.send-mail');
     });
 
     Route::group(['prefix' => 'news'], function () {
@@ -68,6 +77,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 });
 
 Route::get('search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
+Route::get('terms-and-conditions', function(){
+    return view('user.termsAndConditions');
+})->name('terms-and-conditions');
+Route::get('about-us', function(){
+    return view('user.aboutUs');
+})->name('about-us');
 
 Route::group(['prefix' => 'courses'], function () {
     Route::get('/', [App\Http\Controllers\CourseController::class, 'index'])->name('courses.index');

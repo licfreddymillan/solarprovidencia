@@ -133,7 +133,6 @@ class PaypalController extends Controller
 							->first();
 		}
 		
- 
 		if (empty($payerId) || empty($token)) {
 			if ($request->session()->get('content_type') == 'curso'){
 				return redirect('courses/show/'.$datosCurso->slug.'/'.$curso)->with('msj-erroneo', 'Hubo un problema al intentar pagar con Paypal');
@@ -163,6 +162,18 @@ class PaypalController extends Controller
 				$compra->status = 1;
 				$compra->save();
 
+				$data['compra'] = $compra; 
+		        $data['comprador'] = Auth::user();
+		        Mail::send('emails.newPurchase',['data' => $data], function($msg) use ($data){
+		            $msg->to('luisanaelenamarin@gmail.com');
+		            $msg->subject('Nueva Compra por Paypal');
+		        });
+
+	            Mail::send('emails.paypalPurchase',['data' => $data], function($msg) use ($data){
+	                $msg->to($data['comprador']->email);
+	                $msg->subject('Su compra ha sido exitosa');
+	            });
+
 				return redirect('user/course-resume/'.$datosCurso->slug.'/'.$curso)->with('msj-exitoso', '¡Felicidades! Has comprado el curso con éxito. ¡Disfrútalo!');
 			}else{
 				Auth::user()->events()->attach($evento);
@@ -176,6 +187,18 @@ class PaypalController extends Controller
 				$compra->date = date('Y-m-d');
 				$compra->status = 1;
 				$compra->save();
+
+				$data['compra'] = $compra; 
+		        $data['comprador'] = Auth::user();
+		        Mail::send('emails.newPurchase',['data' => $data], function($msg) use ($data){
+		            $msg->to('luisanaelenamarin@gmail.com');
+		            $msg->subject('Nueva Compra por Paypal');
+		        });
+
+	            Mail::send('emails.paypalPurchase',['data' => $data], function($msg) use ($data){
+	                $msg->to($data['comprador']->email);
+	                $msg->subject('Su compra ha sido exitosa');
+	            });
 
 				return redirect('user/event-resume/'.$datosEvento->slug.'/'.$evento)->with('msj-exitoso', '¡Felicidades! Has comprado el evento con éxito. ¡Disfrútalo!');
 			}

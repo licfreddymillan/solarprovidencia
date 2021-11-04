@@ -38,7 +38,7 @@ class HomeController extends Controller
             $cursos = Course::get();
             $noticias = News::where('status', '=', 1)->orderBy('id', 'DESC')->get();
             $eventos = Event::where('status', '=', 1)
-                            ->where('date', '>=', date('Y-m-d'))
+                            ->orderBy('date', 'DESC')
                             ->take(8)
                             ->get();
 

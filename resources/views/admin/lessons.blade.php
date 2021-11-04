@@ -16,6 +16,7 @@
     <script src="{{ asset('admin-template/app-assets/vendors/js/tables/datatable/buttons.bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin-template/app-assets/vendors/js/tables/datatable/dataTables.select.min.js') }}"></script>
     <script src="{{ asset('admin-template/app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js') }}"></script>
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
             "use strict"
@@ -87,10 +88,10 @@
                 $("#overlay-text").empty();
                 $("#overlay-text").append('Editar Lección');
                 $("#title").val(leccion.title);
-                $("#description").val(leccion.description);
+                CKEDITOR.instances["description"].setData(leccion.description);
                 $("#duration").val(leccion.duration);
                 $("#status option[value=" + leccion.status + "]").attr("selected", true);
-                $("#video").val(leccion.video);
+                //$("#video").val(leccion.video);
                 $("#lesson_id").val(leccion.id);
             });
 
@@ -161,7 +162,7 @@
                     <tr>
                         <td>{{ $leccion->order }}</td>
                         <td class="product-name">{{ $leccion->title }}</td>
-                        <td class="product-category">{{ $leccion->description }}</td>
+                        <td class="product-category">{!! $leccion->description !!}</td>
                         <td class="product-name">{{ $leccion->duration }}</td>
                         <td>
                             <div @if ($leccion->status == 0) class="chip chip-warning" @else class="chip chip-success" @endif>
@@ -174,7 +175,6 @@
                             <span style="font-size: 20px;"><a href="javascript:;" class="edit-lesson" data-lesson="{{$leccion}}" title="Editar"><i class="feather icon-edit"></i></a></span>
                             <span style="font-size: 20px;"><a href="javascript:;" class="delete-lesson" data-id="{{ $leccion->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
                             <a href="{{ route('admin.courses.lessons.delete', $leccion->id) }}" id="delete-link-{{$leccion->id}}"></a>
-                            <span style="font-size: 20px;"><a href="{{ route('admin.courses.lessons.show', $leccion->id) }}" title="Ver Video"><i class="feather icon-search"></i></a></span>
                         </td>
                     </tr>
                     @endforeach
@@ -208,16 +208,16 @@
                                     </div>
                                     <div class="col-sm-12 data-field-col">
                                         <label for="description">Descripción</label>
-                                        <textarea class="form-control" name="description" required></textarea>
+                                        <textarea class="ckeditor form-control" name="description" required></textarea>
                                     </div>
                                     <div class="col-sm-12 data-field-col">
                                         <label for="duration">Duración</label>
-                                        <input type="text" class="form-control" name="duration" required>
+                                        <input type="text" class="form-control" name="duration">
                                     </div>
-                                    <div class="col-sm-12 data-field-col">
+                                    <!--<div class="col-sm-12 data-field-col">
                                         <label for="title">Link del Video</label>
-                                        <input type="url" class="form-control" name="video" required>
-                                    </div>
+                                        <input type="url" class="form-control" name="video">
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                         </div>
                     </form>
                 </div>
-                <div id="edit-lesson" style="display: none;">
+                <div id="edit-lesson" style="display: none; height: 90%; overflow-y: scroll;">
                     <form action="{{ route('admin.courses.lessons.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" class="form-control" name="lesson_id" id="lesson_id">
@@ -244,16 +244,16 @@
                                     </div>
                                     <div class="col-sm-12 data-field-col">
                                         <label for="description">Descripción</label>
-                                        <textarea class="form-control" name="description" id="description" required></textarea>
+                                        <textarea class="ckeditor form-control" name="description" id="description" required></textarea>
                                     </div>
                                     <div class="col-sm-12 data-field-col">
                                         <label for="duration">Duración</label>
-                                        <input type="text" class="form-control" name="duration" id="duration" required>
+                                        <input type="text" class="form-control" name="duration" id="duration">
                                     </div>
-                                    <div class="col-sm-12 data-field-col">
+                                    <!--<div class="col-sm-12 data-field-col">
                                         <label for="title">Link del Video</label>
-                                        <input type="url" class="form-control" name="video" id="video" required>
-                                    </div>
+                                        <input type="url" class="form-control" name="video" id="video" >
+                                    </div>-->
                                     <div class="col-sm-12 data-field-col">
                                         <label for="status"> Estado</label>
                                         <select class="form-control" id="status" name="status" required>
@@ -266,7 +266,7 @@
                         </div>
                         <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
                             <div class="add-data-btn">
-                                <button type="submit" class="btn btn-primary">Modificar Lección</button>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                             </div>
                             <div class="cancel-data-btn">
                                 <button class="btn btn-outline-danger">Cancelar</button>

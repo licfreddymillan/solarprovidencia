@@ -33,35 +33,65 @@
                     <div class="course-details-content">
                         <h2>{{ $curso->title }}</h2>
                         <p>{{ $curso->subtitle }}</p>
-                        <div class="course-details-left">
+                        <div class="">
                             <div class="single-course-left">
                                 <h3>Descripción del Curso</h3>
-                                <p>{{ $curso->description }}</p>
+                                <p>{!! $curso->description !!}</p>
+                                
+                                @if ($curso->lessons->count() > 0)
+                                    <div class="course-title pb-20">
+                                        <h3 style="color: white;">Lecciones</h3>
+                                    </div>
+                                    @foreach ($curso->lessons as $leccion)
+                                        <div class="panel" style="border: solid 1px #2C2B5E;">
+                                            <div class="panel-heading"style="background-color: #2C2B5E;">
+                                                <div class="row">
+                                                    <div class="col-md-6 text-left">
+                                                        <a href="#" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="panel-body">
+                                                {!! $leccion->description !!}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                         <div class="course-details-right">
                             <h3>DETALLES DEL CURSO</h3>
                             <ul>
-                                <li>Duración <span>{{ $curso->duration }}</span></li>
+                                @if (!is_null($curso->duration))
+                                 <li>Duración <span>{{ $curso->duration }}</span></li>
+                                @endif
                                 <li>Nivel <span>{{ $curso->level }}</span></li>
                                 <li>Idioma <span>{{ $curso->language }}</span></li>
-                                <li>Estudiantes <span>{{ $curso->users_count }}</span></li>
+                                <li>Fecha de inicio <span>{{ date('d-m-Y', strtotime($curso->date)) }}</span></li>
                             </ul>
                             <h3 class="red">Precio: ${{ $curso->price }}</h3>
 
                             @if (!Auth::guest())
-                                <div style="padding-top: 10px;" class="text-center">
-                                    <form action="{{ route('paypal-checkout') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="amount" value="{{ $curso->price }}"> 
-                                        <input type="hidden" name="description" value="{{ $curso->title }}">  
-                                        <input type="hidden" name="course_id" value="{{ $curso->id }}">
-                                        <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
-                                    </form>
-                                </div>
-                                <div style="padding-top: 10px;" class="text-center">
-                                    <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
-                                </div>
+                                @if (is_null($transferenciaPendiente))
+                                    <div style="padding-top: 10px;" class="text-center">
+                                        <form action="{{ route('paypal-checkout') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="amount" value="{{ $curso->price }}"> 
+                                            <input type="hidden" name="description" value="{{ $curso->title }}">  
+                                            <input type="hidden" name="course_id" value="{{ $curso->id }}">
+                                            <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
+                                        </form>
+                                    </div>
+                                    <div style="padding-top: 10px;" class="text-center">
+                                        <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
+                                    </div>
+                                @else
+                                    <div style="padding-top: 10px; color: orange;" class="text-center">
+                                        Usted tiene una transferencia en proceso...
+                                    </div>
+                                @endif
                             @else
                                 <div class="tex-center" style="padding-top: 10px; font-weight: 700;">
                                     <a href="{{ route('login') }}">Inicia sesión</a> o <a href="{{ route('register') }}">regístrate</a> para poder comprar el curso

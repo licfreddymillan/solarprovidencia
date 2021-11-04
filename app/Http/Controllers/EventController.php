@@ -8,6 +8,7 @@ use App\Models\Event; use App\Models\Transfer;
 use App\Models\News;
 use DB;
 use Auth;
+use Mail;
 
 class EventController extends Controller
 {
@@ -55,12 +56,19 @@ class EventController extends Controller
     }
 
     public function show($slug, $id){
+        $transferenciaPendiente = NULL;
         if ( (!Auth::guest()) && (Auth::user()->rol == 2) ){ 
             $agregado = Auth::user()->events()->where('event_id', '=', $id)->count();
 
             if ($agregado == 1){
                return redirect('user/event-resume/'.$slug.'/'.$id);
             } 
+
+            $transferenciaPendiente = DB::table('bank_transfers')
+                                        ->where('user_id', '=', Auth::user()->id)
+                                        ->where('event_id', '=', $id)
+                                        ->where('status', '=', 0)
+                                        ->first();
         }
         
         $evento = Event::where('id', '=', $id)
@@ -75,7 +83,7 @@ class EventController extends Controller
                             ->take(5)
                             ->get();
 
-        return view('user.showEvent')->with(compact('evento', 'otrosEventos'));
+        return view('user.showEvent')->with(compact('evento', 'otrosEventos', 'transferenciaPendiente'));
     }
 
     public function update(Request $request){
@@ -203,5 +211,49 @@ class EventController extends Controller
         $evento = Event::find($id);
 
         return view('user.showEventVideo')->with(compact('evento'));
+    }
+
+    public function subscribers($id){
+        $evento = Event::withCount('purchases')
+                            ->where('id', '=', $id)
+                            ->first();
+
+        return view('admin.subscribers')->with(compact('evento'));
+    }
+
+    public function send_mail(Request $request){
+        $evento = Event::with('users')
+                            ->where('id', '=', $request->event_id)
+                            ->first();
+
+        $data = [];
+        $data['adjunto'] = NULL;
+        if ($request->hasFile('file')){
+            $file = $request->file('file');
+            $name = time().$file->getClientOriginalName();
+            $file->move(public_path() . '/uploads/files/events', $name);
+            $data['adjunto'] = $name;
+        }
+
+        $data['content'] = $request->description;
+        $data['title'] = $request->title;
+
+        foreach ($evento->users as $suscriptor){
+            $usuario = DB::table('users')
+                        ->select('email')
+                        ->where('id', '=', $suscriptor->pivot->user_id)
+                        ->first();
+
+            $data['correo'] = $usuario->email; 
+            Mail::send('emails.eventSubscription',['data' => $data], function($msg) use ($data){
+                $msg->to($data['correo']);
+                $msg->subject($data['title']);
+                if (!is_null($data['adjunto'])){
+                    $msg->attach('https://www.solarprovidencia.com/uploads/files/events/'.$data['adjunto']);
+                }
+            });
+        } 
+
+        return redirect('admin/events/subscribers/'.$request->event_id)->with('mail-msj', '1');
     }
 }

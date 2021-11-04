@@ -55,12 +55,19 @@ class CourseController extends Controller
     }
 
     public function show($slug, $id){
+        $transferenciaPendiente = NULL;
         if ( (!Auth::guest()) && (Auth::user()->rol == 2) ){ 
             $agregado = Auth::user()->courses()->where('course_id', '=', $id)->count();
 
             if ($agregado == 1){
                return redirect('user/course-resume/'.$slug.'/'.$id);
             } 
+
+            $transferenciaPendiente = DB::table('bank_transfers')
+                                    ->where('user_id', '=', Auth::user()->id)
+                                    ->where('course_id', '=', $id)
+                                    ->where('status', '=', 0)
+                                    ->first();
         }
 
         $curso = Course::where('id', '=', $id)
@@ -76,7 +83,7 @@ class CourseController extends Controller
             ->take(4)
             ->get();
 
-        return view('user.showCourse')->with(compact('curso', 'categorias', 'noticias'));
+        return view('user.showCourse')->with(compact('curso', 'categorias', 'noticias', 'transferenciaPendiente'));
     }
 
     public function update(Request $request)

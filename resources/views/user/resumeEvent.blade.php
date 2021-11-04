@@ -1,5 +1,36 @@
 @extends('layouts.user.template')
 
+@push('styles')
+    <style>
+        .countdown {
+            /*background-color: #6E12FF !important;
+            padding: 20px 10px !important;*/
+        }
+        .countdown-end-text {
+            color: #2C2B5E;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .countdown-div {
+            margin-top: 0 !important;
+            color: white;
+            font-size: 30px;
+        }
+        .countdown-time-div {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .countdown-time-div-background {
+            background-color: #2C2B5E;
+            border-radius: 10px;
+        }
+        .countdown-time {
+            font-size: 50px;
+            font-weight: bold;
+        }
+    </style>    
+@endpush
+
 @push('scripts')
     <script>
         const getRemainingTime = deadline => {
@@ -33,10 +64,10 @@
                     $("#live").css('display', 'none');
                     $("#clock").css('display', 'block');
                     
-                    document.getElementById("days").innerHTML = '<b>'+t.remainDays+'</b> Días';
-                    document.getElementById("hours").innerHTML = '<b>'+t.remainHours+'</b> Horas';
-                    document.getElementById("minutes").innerHTML = '<b>'+t.remainMinutes+'</b> Minutos';
-                    document.getElementById("seconds").innerHTML = '<b>'+t.remainSeconds+'</b> Segundos';
+                    document.getElementById("days").innerHTML = '<b>'+t.remainDays+'</b>';
+                    document.getElementById("hours").innerHTML = '<b>'+t.remainHours+'</b>';
+                    document.getElementById("minutes").innerHTML = '<b>'+t.remainMinutes+'</b>';
+                    document.getElementById("seconds").innerHTML = '<b>'+t.remainSeconds+'</b>';
                 }
             }, 1000)
         };
@@ -51,6 +82,7 @@
 
     </script>
 @endpush
+
 @section('content')
     @include('layouts.user.partials.header')
     <input type="hidden" id="countdown_limit" value="{{ $countdown_limit }}">
@@ -101,13 +133,45 @@
                                             El evento no posee el video pregrabado aún...
                                         @endif
                                     @else
-                                        <div id="clock">
+                                        <!--<div class="countdown" id="clock">
                                             <div class="pb-20" style="font-size: 20px; font-weight: bold;"> FALTAN </div>
                                             <div class="row">
                                                 <div class="col-md-3" id="days" style="font-size: 20px; color: red;"></div>
                                                 <div class="col-md-3" id="hours" style="font-size: 20px; color: red;"></div>
                                                 <div class="col-md-3" id="minutes" style="font-size: 20px; color: red;"></div>
                                                 <div class="col-md-3" id="seconds" style="font-size: 20px; color: red;"></div>
+                                            </div>
+                                        </div>-->
+
+                                        <div class="countdown" id="clock">
+                                            <div class="row">
+                                                <div class="col-md-12 uk-text-center mb-2">
+                                                    <div class="countdown-end-text">El evento iniciará en:</div>   
+                                                </div>
+                                                <div class="col-md-12 uk-text-center countdown-div">
+                                                    <div class="row">
+                                                        <div class="col-md-3 uk-text-center countdown-time-div">
+                                                            <div class="countdown-time-div-background">
+                                                                <span class="countdown-time" id="days"></span><br> Días
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 uk-text-center countdown-time-div">
+                                                            <div class="countdown-time-div-background">
+                                                                <span class="countdown-time" id="hours"></span><br> Horas
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 uk-text-center countdown-time-div">
+                                                            <div class="countdown-time-div-background">
+                                                                <span class="countdown-time" id="minutes"></span><br> Minutos
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 uk-text-center countdown-time-div">
+                                                            <div class="countdown-time-div-background">
+                                                                <span class="countdown-time" id="seconds"></span><br> Segundos
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 

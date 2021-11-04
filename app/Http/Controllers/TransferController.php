@@ -8,6 +8,7 @@ use App\Models\Transfer;
 use App\Models\Purchase;
 use DB;
 use Auth;
+use Mail;
 
 class TransferController extends Controller
 {
@@ -42,7 +43,16 @@ class TransferController extends Controller
             $file->move(public_path() . '/uploads/images/transfers', $name);
             $transferencia->support_image = $name;
             $transferencia->save();
+
+            $data['adjunto'] = $name;
         }
+
+        $data['transferencia'] = $transferencia; 
+        $data['comprador'] = Auth::user();
+        Mail::send('emails.newTransfer',['data' => $data], function($msg) use ($data){
+            $msg->to('luisanaelenamarin@gmail.com');
+            $msg->subject('Nuevo Reporte de Transferencia');
+        });
 
         if (isset($request->course_id)){
             return redirect('user/my-courses')->with('msj-exitoso', 'Su registro de transferencia ha sido registrado con éxito. En un lapso de 48 horas le daremos respuesta a su solicitud.');
@@ -85,10 +95,20 @@ class TransferController extends Controller
                 $compra->status = 1;
                 $compra->save();
             }
-         
-            
+
+            $data['transferencia'] = $transferencia;
+            Mail::send('emails.processTransfer',['data' => $data], function($msg) use ($data){
+                $msg->to($data['transferencia']->user->email);
+                $msg->subject('Su transferencia fue aprobada');
+            });
            return redirect('admin/transfers/pending')->with('approve-msj', '1'); 
-       }else{
+        }else{
+
+            $data['transferencia'] = $transferencia;
+            Mail::send('emails.processTransfer',['data' => $data], function($msg) use ($data){
+                $msg->to($data['transferencia']->user->email);
+                $msg->subject('Su transferencia fue denegada');
+            });
             return redirect('admin/transfers/pending')->with('deny-msj', '1');
        }
     }

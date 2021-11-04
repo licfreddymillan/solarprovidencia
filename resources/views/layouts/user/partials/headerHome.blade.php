@@ -24,6 +24,7 @@
                                     @endif
                                     <li><a href="{{ route('news.index') }}">Noticias</a></li>
                                     {{--<li><a href="#">Contáctanos</a></li>--}}
+                                    <li><a href="https://solarprovidencia.com/">Tienda</a></li>
                                     @if (Auth::guest())
                                         <li><a href="{{ route('login') }}">Entrar</a></li>
                                         <li><a href="{{ route('register') }}">Registrarme</a></li>
@@ -33,6 +34,7 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    
                                 </ul>
                             </nav>
                         </div>

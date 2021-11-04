@@ -83,7 +83,7 @@
                     <div class="col-xs-12">
                         <div class="banner-content-wrapper">
                             <div class="banner-content">
-                                <h2>Resgistro</h2> 
+                                <h2>Registro</h2> 
                             </div> 
                         </div>
                     </div>

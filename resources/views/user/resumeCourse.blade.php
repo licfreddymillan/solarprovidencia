@@ -23,49 +23,51 @@
                         <div class="course-details-content">
                             <h2>{{ $curso->title }}</h2>
                             <p>{{ $curso->subtitle }}</p>
-                            <p>{{ $curso->description }}</p>
+                            <p>{!! $curso->description !!}</p>
                             
-                            <div>
-                                <div class="course-title pb-20">
-                                    <h3>Lecciones</h3>
-                                </div>
-                                @foreach ($curso->lessons as $leccion)
-                                    <div class="panel" style="border: solid 1px #2C2B5E;">
-                                        <div class="panel-heading"style="background-color: #2C2B5E;">
-                                            <div class="row">
-                                                <div class="col-md-6 text-left">
-                                                    <a href="{{ route('user.show-lesson', [$leccion->slug, $leccion->id]) }}" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
-                                                </div>
-                                                <div class="col-md-6 text-right" style="font-size: 14px; color: white; font-weight: bold;">
-                                                    @if ($leccion->vista == 1)
-                                                        <i class="fa fa-check-circle"></i> Vista
-                                                    @else
-                                                        <i class="fa fa-eye"></i> Pendiente
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="panel-body">
-                                            {{ $leccion->description }}
-                                        </div>
+                            @if ($curso->lessons->count() )
+                                <div>
+                                    <div class="course-title pb-20">
+                                        <h3>Lecciones</h3>
                                     </div>
-                                @endforeach
-
-                                <div class="text-center">
-                                    @if ($datosProgreso->progress == 100)
-                                        @if ($datosProgreso->finish == 0)
-                                            <button type="button" class="default-btn" data-toggle="modal" data-target="#modal-clase">Solicitar clase en vivo</button>
-                                        @else
-                                            @if ($datosProgreso->online_class == 1)
-                                                <label class="label label-warning"><i class="fas fa-tv"></i> Esperando clase en vivo...</label>
+                                    @foreach ($curso->lessons as $leccion)
+                                        <div class="panel" style="border: solid 1px #2C2B5E;">
+                                            <div class="panel-heading"style="background-color: #2C2B5E;">
+                                                <div class="row">
+                                                    <div class="col-md-6 text-left">
+                                                        <a href="#" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
+                                                    </div>
+                                                    <!--<div class="col-md-6 text-right" style="font-size: 14px; color: white; font-weight: bold;">
+                                                        @if ($leccion->vista == 1)
+                                                            <i class="fa fa-check-circle"></i> Vista
+                                                        @else
+                                                            <i class="fa fa-eye"></i> Pendiente
+                                                        @endif
+                                                    </div>-->
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="panel-body">
+                                                {{ $leccion->description }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+    
+                                    <div class="text-center">
+                                        @if ($datosProgreso->progress == 100)
+                                            @if ($datosProgreso->finish == 0)
+                                                <button type="button" class="default-btn" data-toggle="modal" data-target="#modal-clase">Solicitar clase en vivo</button>
                                             @else
-                                                <label class="label label-success"><i class="fa fa-medal"></i> ¡Curso Finalizado!</label>
+                                                @if ($datosProgreso->online_class == 1)
+                                                    <label class="label label-warning"><i class="fas fa-tv"></i> Esperando clase en vivo...</label>
+                                                @else
+                                                    <label class="label label-success"><i class="fa fa-medal"></i> ¡Curso Finalizado!</label>
+                                                @endif
                                             @endif
                                         @endif
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

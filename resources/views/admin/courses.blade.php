@@ -95,7 +95,7 @@
             $("#subtitle").val(curso.subtitle);
             CKEDITOR.instances["description"].setData(curso.description);
             $("#price").val(curso.price);
-            $("#duration").val(curso.duration);
+            $("#date").val(curso.date);
             $("#category_id option[value=" + curso.category_id + "]").attr("selected", true);
             $("#level option[value=" + curso.level + "]").attr("selected", true);
             $("#language option[value=" + curso.language + "]").attr("selected", true);
@@ -266,8 +266,8 @@
                                     <input type="text" class="form-control" name="price" required>
                                 </div>
                                 <div class="col-sm-6 data-field-col">
-                                    <label for="duration">Duración</label>
-                                    <input type="text" class="form-control" name="duration" required>
+                                    <label for="date">Fecha</label>
+                                    <input type="date" class="form-control" name="date">
                                 </div>
                                 <div class="col-sm-12 data-field-col">
                                     <label for="cover">Portada</label>
@@ -336,8 +336,8 @@
                                     <input type="text" class="form-control" name="price" id="price" required>
                                 </div>
                                 <div class="col-sm-6 data-field-col">
-                                    <label for="duration">Duración</label>
-                                    <input type="text" class="form-control" name="duration" id="duration" required>
+                                    <label for="date">Fecha</label>
+                                    <input type="date" class="form-control" name="date" id="date" required>
                                 </div>
                                 <div class="col-sm-12 data-field-col">
                                     <label for="duration">Portada</label>

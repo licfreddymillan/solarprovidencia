@@ -44,7 +44,7 @@
                                 <h4>Mentor</h4>
                                     <div class="single-speaker">
                                         <div class="speaker-img">
-                                            <img src="{{ asset('eduhome/img/event/speaker1.jpg') }}" alt="speaker">
+                                            <img src="http://localhost:8000/images/damian.jpg" alt="speaker" style="width: 100px; height: 120px;">
                                         </div>
                                         <div class="speaker-name">
                                             <h5>Damián Chávez</h5>
@@ -65,18 +65,24 @@
                                 <h3 class="red">Precio: ${{ $evento->price }}</h3>
 
                                 @if (!Auth::guest())
-                                    <div style="padding-top: 10px;" class="text-center">
-                                        <form action="{{ route('paypal-checkout') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="amount" value="{{ $evento->price }}"> 
-                                            <input type="hidden" name="description" value="{{ $evento->title }}">  
-                                            <input type="hidden" name="event_id" value="{{ $evento->id }}">
-                                            <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
-                                        </form>
-                                    </div>
-                                    <div style="padding-top: 10px;" class="text-center">
-                                        <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
-                                    </div>
+                                    @if (is_null($transferenciaPendiente))
+                                        <div style="padding-top: 10px;" class="text-center">
+                                            <form action="{{ route('paypal-checkout') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="amount" value="{{ $evento->price }}"> 
+                                                <input type="hidden" name="description" value="{{ $evento->title }}">  
+                                                <input type="hidden" name="event_id" value="{{ $evento->id }}">
+                                                <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
+                                            </form>
+                                        </div>
+                                        <div style="padding-top: 10px;" class="text-center">
+                                            <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
+                                        </div>
+                                    @else
+                                        <div style="padding-top: 10px; color: orange;" class="text-center">
+                                            Usted tiene una transferencia en proceso...
+                                        </div>
+                                    @endif
                                 @else
                                     <div class="tex-center" style="padding-top: 10px; font-weight: 700;">
                                         <a href="{{ route('login') }}">Inicia sesión</a> o <a href="{{ route('register') }}">regístrate</a> para poder comprar el curso

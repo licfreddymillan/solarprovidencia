@@ -1,9 +1,9 @@
 <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="navbar-header">
+    <div class="navbar-header" style="height: 80px !important;">
         <ul class="nav navbar-nav flex-row">
-            <li class="nav-item mr-auto"><a class="navbar-brand" href="../../../html/ltr/vertical-menu-template/index.html">
-                    <div class="brand-logo"></div>
-                    <h2 class="brand-text mb-0">Solar</h2>
+            <li class="nav-item mr-auto">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('logos/logo.png')}}" alt="Admin Solar" style="width: 160px;">
                 </a>
             </li>
         </ul>

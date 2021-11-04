@@ -196,6 +196,8 @@
                         @if ($evento->users_count == 0)
                             <span style="font-size: 20px;"><a href="javascript:;" class="delete-event" data-id="{{ $evento->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
                             <a href="{{ route('admin.events.delete', $evento->id) }}" id="delete-link-{{$evento->id}}"></a>
+                        @else
+                            <span style="font-size: 20px;"><a href="{{ route('admin.events.subscribers', $evento->id) }}" title="Ver Suscriptores"><i class="feather icon-search"></i></a></span>
                         @endif
                     </td>
                 </tr>
