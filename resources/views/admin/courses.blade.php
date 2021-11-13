@@ -41,7 +41,7 @@
                 style: "multi"
             },*/
             order: [
-                [1, "asc"]
+                [0, "desc"]
             ],
             bInfo: false,
             pageLength: 10,
@@ -97,6 +97,7 @@
             $("#price").val(curso.price);
             $("#date").val(curso.date);
             $("#category_id option[value=" + curso.category_id + "]").attr("selected", true);
+            $("#type option[value=" + curso.type + "]").attr("selected", true);
             $("#level option[value=" + curso.level + "]").attr("selected", true);
             $("#language option[value=" + curso.language + "]").attr("selected", true);
             $("#status option[value=" + curso.status + "]").attr("selected", true);
@@ -163,6 +164,7 @@
         <table class="table data-thumb-view">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Portada</th>
                     <th>Título</th>
                     <th>Categoría</th>
@@ -176,6 +178,7 @@
             <tbody>
                 @foreach ($cursos as $curso)
                 <tr>
+                    <td>{{ $curso->id }}</td>
                     <td class="product-img"><img src="{{ asset('uploads/images/courses/'.$curso->cover) }}" alt="{{ $curso->title }}" style="width: 150px; height: 100px;">
                     </td>
                     <td class="product-name">{{ $curso->title }}</td>
@@ -235,13 +238,21 @@
                                     <label for="description">Descripción</label>
                                     <textarea class="ckeditor form-control" name="description" required></textarea>
                                 </div>
-                                <div class="col-sm-12 data-field-col">
+                                <div class="col-sm-6 data-field-col">
                                     <label for="category_id"> Categoría</label>
                                     <select class="form-control" name="category_id" required>
                                         <option value="" selected disabled>Seleccione una opción...</option>
                                         @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 data-field-col">
+                                    <label for="type"> Tipo de Curso</label>
+                                    <select class="form-control" name="type" required>
+                                        <option value="" selected disabled>Seleccione una opción...</option>
+                                        <option value="Online">Online</option>
+                                        <option value="Pregrabado">Pregrabado</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 data-field-col">
@@ -305,13 +316,21 @@
                                     <label for="description">Descripción</label>
                                     <textarea class="ckeditor form-control" name="description" id="description" required></textarea>
                                 </div>
-                                <div class="col-sm-12 data-field-col">
+                                <div class="col-sm-6 data-field-col">
                                     <label for="category_id"> Categoría</label>
                                     <select class="form-control" id="category_id" name="category_id" required>
                                         <option value="" selected disabled>Seleccione una opción...</option>
                                         @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->title }}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 data-field-col">
+                                    <label for="type"> Tipo de Curso</label>
+                                    <select class="form-control" name="type" id="type" required>
+                                        <option value="" selected disabled>Seleccione una opción...</option>
+                                        <option value="Online">Online</option>
+                                        <option value="Pregrabado">Pregrabado</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-6 data-field-col">

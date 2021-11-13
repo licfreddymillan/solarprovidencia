@@ -11,7 +11,7 @@ class Course extends Model
 
     protected $table = "courses";
 
-    protected $fillable = ['title', 'slug', 'subtitle', 'description', 'category_id', 'duration', 'date', 'language', 'level', 'price', 'status', 'cover'];
+    protected $fillable = ['title', 'slug', 'subtitle', 'description', 'category_id', 'type', 'duration', 'date', 'language', 'level', 'price', 'status', 'cover'];
 
     public function category()
     {

@@ -34,38 +34,47 @@
                                         <div class="panel" style="border: solid 1px #2C2B5E;">
                                             <div class="panel-heading"style="background-color: #2C2B5E;">
                                                 <div class="row">
-                                                    <div class="col-md-6 text-left">
-                                                        <a href="#" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
-                                                    </div>
-                                                    <!--<div class="col-md-6 text-right" style="font-size: 14px; color: white; font-weight: bold;">
-                                                        @if ($leccion->vista == 1)
-                                                            <i class="fa fa-check-circle"></i> Vista
-                                                        @else
-                                                            <i class="fa fa-eye"></i> Pendiente
-                                                        @endif
-                                                    </div>-->
+                                                    @if ($curso->type == "Pregrabado")
+                                                        <div class="col-md-6 text-left">
+                                                            <a href="{{ route('user.show-lesson', [$leccion->slug, $leccion->id]) }}" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
+                                                        </div>
+                                                        <div class="col-md-6 text-right" style="font-size: 14px; color: white; font-weight: bold;">
+                                                            @if ($leccion->vista == 1)
+                                                                <i class="fa fa-check-circle"></i> Vista
+                                                            @else
+                                                                <i class="fa fa-eye"></i> Pendiente
+                                                            @endif
+                                                        </div>
+                                                    @else
+                                                        <div class="col-md-12 text-left">
+                                                            <a href="#" style="font-size: 18px; color: white; font-weight: bold;"><i class="fa fa-play-circle"></i> {{ $leccion->title }}</a>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                                 
                                             </div>
                                             <div class="panel-body">
-                                                {{ $leccion->description }}
+                                                {!! $leccion->description !!}
                                             </div>
                                         </div>
                                     @endforeach
-    
-                                    <div class="text-center">
-                                        @if ($datosProgreso->progress == 100)
-                                            @if ($datosProgreso->finish == 0)
-                                                <button type="button" class="default-btn" data-toggle="modal" data-target="#modal-clase">Solicitar clase en vivo</button>
-                                            @else
-                                                @if ($datosProgreso->online_class == 1)
-                                                    <label class="label label-warning"><i class="fas fa-tv"></i> Esperando clase en vivo...</label>
+                                    
+                                    @if ($curso->type == "Pregrabado")
+                                        <div class="text-center">
+                                            @if ($datosProgreso->progress == 100)
+                                                <a href="{{ route('user.get-certificate', $curso->id) }}" type="button" class="default-btn" target="_blank">Descargar Certificado</a>
+                                                {{--  @if ($datosProgreso->finish == 0)
+                                                    <button type="button" class="default-btn" data-toggle="modal" data-target="#modal-clase">Solicitar clase en vivo</button>
                                                 @else
-                                                    <label class="label label-success"><i class="fa fa-medal"></i> ¡Curso Finalizado!</label>
-                                                @endif
+                                                    @if ($datosProgreso->online_class == 1)
+                                                        <label class="label label-warning"><i class="fas fa-tv"></i> Esperando clase en vivo...</label>
+                                                    @else
+                                                        <label class="label label-success"><i class="fa fa-medal"></i> ¡Curso Finalizado!</label>
+                                                    @endif
+                                                @endif --}}
                                             @endif
-                                        @endif
-                                    </div>
+                                        </div>
+                                    @endif
                                 </div>
                             @endif
                         </div>

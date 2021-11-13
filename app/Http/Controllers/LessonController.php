@@ -9,13 +9,17 @@ use DB; use Auth;
 
 class LessonController extends Controller
 {
-
     public function index($course_id){
         $lecciones = Lesson::where('course_id', '=', $course_id)
                         ->orderBy('order', 'ASC')
                         ->get();
+        
+        $datosCurso = DB::table('courses')
+                        ->select('id', 'type')
+                        ->where('id', '=', $course_id)
+                        ->first();
 
-        return view('admin.lessons')->with(compact('lecciones', 'course_id'));
+        return view('admin.lessons')->with(compact('lecciones', 'datosCurso'));
     }
 
     public function store(Request $request){
@@ -102,11 +106,15 @@ class LessonController extends Controller
 
         $cantLecciones = $lecciones->count();
         $progreso = ( ($cantLeccionesVistas*100) / $cantLecciones);
+        $ending_date = NULL;
+        if ($progreso == 100){
+            $ending_date = date('Y-m-d');
+        }
 
         $progresoCurso = DB::table('courses_users')
                             ->where('course_id', '=', $leccionActual->course_id)
                             ->where('user_id', '=', Auth::user()->id)
-                            ->update(['progress' => $progreso]);
+                            ->update(['progress' => $progreso, 'ending_date' => $ending_date]);
                               
         return view('user.showLesson')->with(compact('leccionActual', 'lecciones', 'leccionVista'));
     }

@@ -46,7 +46,17 @@
                                 <div class="course-content">
                                     <h3><a href="course-details.html">{{ $curso->title }}</a></h3>
                                     <p>{{ $curso->subtitle }}</p>
-                                    <a class="default-btn" href="{{ route('user.course-resume', [$curso->slug, $curso->id]) }}">Ir al Curso</a>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 text-left">
+                                            <a class="default-btn" href="{{ route('user.course-resume', [$curso->slug, $curso->id]) }}">Ir al Curso</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-6 text-right" style="font-weight: bold;">
+                                            <span class="text-info"> {{ $curso->type }} </span><br>
+                                            @if ($curso->type == "Online")
+                                                <i class="fa fa-calendar"> {{ date('d/m/Y', strtotime($curso->date)) }}</i>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

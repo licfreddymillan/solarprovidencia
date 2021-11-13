@@ -134,10 +134,10 @@
                                     <a class="default-btn" href="{{ route('courses.show', [$curso->slug, $curso->id]) }}">Ver Más</a>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-6 text-right" style="font-weight: bold;">
-                                    <span class="text-info"> Online </span>
-                                    <i class="fa fa-calendar"> {{ date('d/m/Y', strtotime($curso->date)) }}</i>
-                                    
-                                    
+                                    <span class="text-info"> {{ $curso->type }} </span><br>
+                                    @if ($curso->type == "Online")
+                                        <i class="fa fa-calendar"> {{ date('d/m/Y', strtotime($curso->date)) }}</i>
+                                    @endif
                                 </div>
                             </div>
                     </div>

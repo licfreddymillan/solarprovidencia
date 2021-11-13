@@ -74,23 +74,29 @@
                             <h3 class="red">Precio: ${{ $curso->price }}</h3>
 
                             @if (!Auth::guest())
-                                @if (is_null($transferenciaPendiente))
+                                @if ($curso->price == 0)
                                     <div style="padding-top: 10px;" class="text-center">
-                                        <form action="{{ route('paypal-checkout') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="amount" value="{{ $curso->price }}"> 
-                                            <input type="hidden" name="description" value="{{ $curso->title }}">  
-                                            <input type="hidden" name="course_id" value="{{ $curso->id }}">
-                                            <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
-                                        </form>
-                                    </div>
-                                    <div style="padding-top: 10px;" class="text-center">
-                                        <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
+                                        <a class="btn btn-success" href="{{ route('user.course-add', [$curso->slug, $curso->id]) }}"><i class="fa fa-plus-circle"></i> Adquirir Curso</a>
                                     </div>
                                 @else
-                                    <div style="padding-top: 10px; color: orange;" class="text-center">
-                                        Usted tiene una transferencia en proceso...
-                                    </div>
+                                    @if (is_null($transferenciaPendiente))
+                                        <div style="padding-top: 10px;" class="text-center">
+                                            <form action="{{ route('paypal-checkout') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="amount" value="{{ $curso->price }}"> 
+                                                <input type="hidden" name="description" value="{{ $curso->title }}">  
+                                                <input type="hidden" name="course_id" value="{{ $curso->id }}">
+                                                <button type="submit" class="btn btn-primary"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
+                                            </form>
+                                        </div>
+                                        <div style="padding-top: 10px;" class="text-center">
+                                            <a class="btn btn-success" data-toggle="modal" data-target="#modal-transferencia"><i class="fas fa-university"></i> Pagar con Transferencia Bancaria</a>
+                                        </div>
+                                    @else
+                                        <div style="padding-top: 10px; color: orange;" class="text-center">
+                                            Usted tiene una transferencia en proceso...
+                                        </div>
+                                    @endif
                                 @endif
                             @else
                                 <div class="tex-center" style="padding-top: 10px; font-weight: 700;">

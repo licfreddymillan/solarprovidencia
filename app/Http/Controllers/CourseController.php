@@ -203,4 +203,71 @@ class CourseController extends Controller
 
         return view('admin.pendingClass')->with(compact('clasesPendientes'));
     }
+
+    public function add_course($course_slug, $course_id){
+        Auth::user()->courses()->attach($course_id, ['start_date' => date('Y-m-d')]);
+
+        return redirect('user/course-resume/'.$course_slug.'/'.$course_id)->with('msj-exitoso', '¡Felicidades! Has agregado el curso con éxito. ¡Disfrútalo!');
+    }
+
+    //**** Genera el PDF del certificado ***//
+    public function get_certificate($curso_id){
+        $datosCurso = Course::where('id', '=', $curso_id)
+                        ->first();
+        
+        $datosProgreso = DB::table('courses_users')
+                            ->where('user_id', '=', Auth::user()->id)
+                            ->where('course_id', '=', $curso_id)
+                            ->first();
+
+        $partesFecha = explode("-", $datosProgreso->ending_date);
+
+        switch ($partesFecha[1]) {
+            case '01':
+                $mes = 'Enero';
+            break;
+            case '02':
+                $mes = 'Febrero';
+            break;
+            case '03':
+                $mes = 'Marzo';
+            break;
+            case '04':
+                $mes = 'Abril';
+            break;
+            case '05':
+                $mes = 'Mayo';
+            break;
+            case '06':
+                $mes = 'Junio';
+            break;
+            case '07':
+                $mes = 'Julio';
+            break;
+            case '08':
+                $mes = 'Agosto';
+            break;
+            case '09':
+                $mes = 'Septiembre';
+            break;
+            case '10':
+                $mes = 'Octubre';
+            break;
+            case '11':
+                $mes = 'Noviembre';
+            break;
+            case '12':
+                $mes = 'Diciembre';
+            break;
+        }
+
+        $fecha_fin = $partesFecha[2]." de ".$mes." de ".$partesFecha[0];
+
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView('user.certificate', compact('datosCurso', 'fecha_fin'))->setPaper('a4', 'landscape');
+        //$output = $pdf->output();
+        /*$path = "certificates/courses/".$usuario_id."-".$curso_id.".pdf"; 
+        file_put_contents($path, $output);*/
+        return $pdf->stream();
+    }
 }

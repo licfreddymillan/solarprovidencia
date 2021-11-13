@@ -164,7 +164,7 @@ textarea {
     transition: all 0.5s ease-out 0s;
 }
 .banner-area {
-  background: rgba(0, 0, 0, 0) url("../img/banner/banner.jpg") no-repeat scroll center center / cover ;
+  background: rgba(0, 0, 0, 0) url("https://academia.solarprovidencia.com/images/banner7.jpg") no-repeat scroll center center / cover ;
   position: relative;
   width: 100%;
   z-index: 1;

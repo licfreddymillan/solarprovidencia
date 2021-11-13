@@ -14,7 +14,7 @@
 					    <div class="course-details-content">
 					    	<h2>{{ $leccionActual->title }}</h2>
 	                        <p>{{ $leccionActual->duration }}</p>
-	                        <p>{{ $leccionActual->description }}</p>
+	                        <p>{!! $leccionActual->description !!}</p>
 
 	                        <a href="{{ route('user.course-resume', [$leccionActual->course->slug, $leccionActual->course->id]) }}"><i class="fa fa-arrow-left"></i> Volver al Curso</a>
 					    </div>

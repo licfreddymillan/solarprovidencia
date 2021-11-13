@@ -91,7 +91,7 @@
                 CKEDITOR.instances["description"].setData(leccion.description);
                 $("#duration").val(leccion.duration);
                 $("#status option[value=" + leccion.status + "]").attr("selected", true);
-                //$("#video").val(leccion.video);
+                $("#video").val(leccion.video);
                 $("#lesson_id").val(leccion.id);
             });
 
@@ -195,10 +195,10 @@
                         <i class="feather icon-x"></i>
                     </div>
                 </div>
-                <div id="new-lesson">
+                <div id="new-lesson" style="height: 90%; overflow-y: scroll;">
                     <form action="{{ route('admin.courses.lessons.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="course_id" value="{{ $course_id }}">
+                        <input type="hidden" name="course_id" value="{{ $datosCurso->id }}">
                         <div class="data-items pb-3">
                             <div class="data-fields px-2">
                                 <div class="row">
@@ -214,10 +214,12 @@
                                         <label for="duration">Duración</label>
                                         <input type="text" class="form-control" name="duration">
                                     </div>
-                                    <!--<div class="col-sm-12 data-field-col">
-                                        <label for="title">Link del Video</label>
-                                        <input type="url" class="form-control" name="video">
-                                    </div>-->
+                                    @if ($datosCurso->type == "Pregrabado")
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="title">Link del Video</label>
+                                            <input type="url" class="form-control" name="video" required>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -250,10 +252,12 @@
                                         <label for="duration">Duración</label>
                                         <input type="text" class="form-control" name="duration" id="duration">
                                     </div>
-                                    <!--<div class="col-sm-12 data-field-col">
-                                        <label for="title">Link del Video</label>
-                                        <input type="url" class="form-control" name="video" id="video" >
-                                    </div>-->
+                                    @if ($datosCurso->type == "Pregrabado")
+                                        <div class="col-sm-12 data-field-col">
+                                            <label for="title">Link del Video</label>
+                                            <input type="url" class="form-control" name="video" id="video" required>
+                                        </div>
+                                    @endif
                                     <div class="col-sm-12 data-field-col">
                                         <label for="status"> Estado</label>
                                         <select class="form-control" id="status" name="status" required>

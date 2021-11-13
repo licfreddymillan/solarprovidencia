@@ -105,6 +105,7 @@ Route::group(['prefix' => 'news'], function () {
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('my-courses', [App\Http\Controllers\CourseController::class, 'my_courses'])->name('user.my-courses');
     Route::get('course-resume/{slug}/{id}',  [App\Http\Controllers\CourseController::class, 'resume'])->name('user.course-resume');
+    Route::get('add/{slug}/{id}',  [App\Http\Controllers\CourseController::class, 'add_course'])->name('user.course-add');
     Route::get('my-events', [App\Http\Controllers\EventController::class, 'my_events'])->name('user.my-events');
     Route::get('event-resume/{slug}/{id}',  [App\Http\Controllers\EventController::class, 'resume'])->name('user.event-resume');
     Route::get('show-event-video/{slug}/{id}',  [App\Http\Controllers\EventController::class, 'show_video'])->name('user.show-event-video');
@@ -113,5 +114,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::post('new-bank-transfer', [App\Http\Controllers\TransferController::class, 'store'])->name('user.transfers.store');
     Route::post('paypal-checkout', [App\Http\Controllers\PaypalController::class, 'payment'])->name('paypal-checkout');
     Route::get('process-paypal-checkout', [App\Http\Controllers\PaypalController::class, 'process_payment'])->name('process-paypal-checkout');
+    Route::get('get-certificate/{course_id}', [App\Http\Controllers\CourseController::class, 'get_certificate'])->name('user.get-certificate');
 });
 
