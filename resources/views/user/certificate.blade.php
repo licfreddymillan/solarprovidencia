@@ -14,103 +14,85 @@
               min-height: 100%;
             }
             body{
-
                 font-family: Helvetica;
-            }
-            .h3{
-                font-size: 25px;
-                font-weight: normal;
-            }
-            h2{
-                font-weight: bold;
-            }
-            .logo{
-                margin-top: 20px;
-                text-align: center;
+                background-image: url('https://academia.solarprovidencia.com/images/fondo.jpeg'); 
+                background-repeat: no-repeat;
+                background-size: cover;
             }
             .content{
-                margin-top: 10px;
+                padding-top: 25%;
                 text-align: center;
+            }
+            .h3{
+                font-size: 30px;
+                font-weight: bold;
+                color: white;
             }
             .username{
-                font-size: 60px;
-                color: #0862A9;
+                padding-top: 15px;
+                font-size: 50px;
+                color: gold;
                 font-weight: normal;
+            }
+            .course-div{
+                padding: 20px 10% 0px 10%;
+                font-size: 28px;
+                font-weight: bold;
+                color: white;
             }
             .course{
-                padding-top: 10px;
-                padding-left: 25px;
-                padding-right: 25px;
-                font-size: 25px;
-                color: #0094CB;
-                font-weight: normal;
-            }
-            .banner-inferior{
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                height: 40px;
-            }
-            .duration{
-                font-size: 18px;
-                /*color: #A1A1A1;*/
-                padding-top: 5px;
-                font-style: oblique;
-            }
-            .date{
-                text-align: center;
-                padding-top: 25px;
-                font-size: 18px;
-                font-style: oblique;
+                padding-top: 30px;
+                font-size: 28px;
+                color: white;
+                font-weight: bold;
             }
             .ceo{
                 text-align: center;
-                padding-top: 20px;
+                padding: 25px 15% 0px 15%;
+                position: relative;
+            }
+            .ceo-name{
+                border: solid white 3px; 
+                color: gold; 
+                font-size: 24px; 
+                padding: 15px 45px; 
+                position: absolute; 
+                top: 130px; 
+                left: 45%;
+            }
+            .thin-line{
+                height: 2px;
+                background-color: white;
+            }
+            .thick-line{
+                height: 8px;
+                background-color: white;
             }
         </style>
     </head>
     <body>
-        <div class="banner-superior">
-            <img src="images/banner_inferior_certificado.png" width="100%">
-        </div>
-        
-        <div class="logo">
-            <img src="logos/logo.png" width="30%">
-        </div>
-
         <div class="content">  
-            <div>
-                <span class="h3">En nombre de la academia Solar Providencia</span>
+            <div class="h3">
+                Solar Providencia otorga el <br>
+                siguiente reconocimiento a:
+            </div>
+    
+            <div class="username">{{ Auth::user()->name }}</div>
+                
+            <div class="course-div">
+                <hr class="thin-line">
+                <hr class="thick-line">
+                Por concluir el taller de 
 
-                <h2>SE CERTIFICA A</h2>
+                <div class="course"><i>{{ $datosCurso->title }}</i></div>
+                <hr class="thick-line">
+                <hr class="thin-line">
             </div>
 
-            <div class="username">{{ Auth::user()->name }}</div>
-            
-            <div class="h3"> Cumpliendo los requisitos del curso en la plataforma Online exitosamente, <br>se le otorga con derechos de certificado de:</div>
-
-            <div class="course">{{ $datosCurso->title }}</div>
-
-            @if (!is_null($datosCurso->duration))
-                <div class="duration">Con una duración de <b>{{ $datosCurso->duration }}</b></div>
-            @endif
-        </div>
-
-        <div>
-            
-        </div>
-        <div class="date">
-            {{ $fecha_fin }}
-        </div>
-
-        <div class="banner-inferior">
-            <img src="images/banner_inferior_certificado.png" width="100%">
-        </div>
-
-        <div class="ceo">
-           <img src="images/firma_sty.png" width="20%"><br>
-           <span><b>Damián Chávez</b></span><br>
-           <span><b>CEO FUNDADOR</b></span>
+            <div class="ceo">
+                <img src="https://academia.solarprovidencia.com/images/firma.png" width="30%" style="position: absolute; top: -15px; left: 55%;">
+                <div class="ceo-name">Otorga S.P y Damián Chávez</div>
+             </div>
         </div>
     </body>
 </html>

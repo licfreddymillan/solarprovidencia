@@ -117,3 +117,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('get-certificate/{course_id}', [App\Http\Controllers\CourseController::class, 'get_certificate'])->name('user.get-certificate');
 });
 
+Route::get('prueba', function(){
+    return view('user.certificate');
+});

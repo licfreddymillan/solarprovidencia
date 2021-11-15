@@ -264,6 +264,7 @@ class CourseController extends Controller
         $fecha_fin = $partesFecha[2]." de ".$mes." de ".$partesFecha[0];
 
         $pdf = \App::make('dompdf.wrapper');
+        //return view('user.certificate')->with(compact('datosCurso', 'fecha_fin'));
         $pdf->loadView('user.certificate', compact('datosCurso', 'fecha_fin'))->setPaper('a4', 'landscape');
         //$output = $pdf->output();
         /*$path = "certificates/courses/".$usuario_id."-".$curso_id.".pdf"; 
