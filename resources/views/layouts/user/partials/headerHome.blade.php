@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class="logo">
-                        <a href="index.html"><img src="{{ asset('logos/logo.png')}}" alt="eduhome" /></a>
+                        <a href="index.html"><img src="{{ asset('logos/logo_white.png')}}" alt="eduhome" /></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-12">

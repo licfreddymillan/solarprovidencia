@@ -199,9 +199,9 @@
                 <div class="col-md-8 col-md-offset-2 col-sm-12">
                     <div class="single-testimonial">
                         <div class="testimonial-info">
-                           <!-- <div class="testimonial-img">
-                                <img src="{{ asset('logos/logo.png')}}" alt="testimonial">
-                            </div>-->
+                            <div class="testimonial-img">
+                                <img src="{{ asset('logos/logo_white.png')}}" alt="testimonial">
+                            </div>
                             <div class="testimonial-content">
                                 <p>Intégrate a una experiencia visionaria y natural del mundo. Aprende a guiarte o permite que te guiemos siguiendo el camino del cosmos. </p>
                                 <h4>Damián Chávez</h4>
