@@ -50,7 +50,7 @@ class TransferController extends Controller
         $data['transferencia'] = $transferencia; 
         $data['comprador'] = Auth::user();
         Mail::send('emails.newTransfer',['data' => $data], function($msg) use ($data){
-            $msg->to('luisanaelenamarin@gmail.com');
+            $msg->to('damianchavez@solarprovidencia.com');
             $msg->subject('Nuevo Reporte de Transferencia');
         });
 

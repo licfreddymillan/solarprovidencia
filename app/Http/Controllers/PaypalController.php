@@ -165,7 +165,7 @@ class PaypalController extends Controller
 				$data['compra'] = $compra; 
 		        $data['comprador'] = Auth::user();
 		        Mail::send('emails.newPurchase',['data' => $data], function($msg) use ($data){
-		            $msg->to('luisanaelenamarin@gmail.com');
+		            $msg->to('damianchavez@solarprovidencia.com');
 		            $msg->subject('Nueva Compra por Paypal');
 		        });
 
@@ -191,7 +191,7 @@ class PaypalController extends Controller
 				$data['compra'] = $compra; 
 		        $data['comprador'] = Auth::user();
 		        Mail::send('emails.newPurchase',['data' => $data], function($msg) use ($data){
-		            $msg->to('luisanaelenamarin@gmail.com');
+		            $msg->to('damianchavez@solarprovidencia.com');
 		            $msg->subject('Nueva Compra por Paypal');
 		        });
 

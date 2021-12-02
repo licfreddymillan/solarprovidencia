@@ -51,7 +51,7 @@
                                             @enderror
                                         </fieldset>
                                         <div class="form-group d-flex justify-content-between align-items-center">
-                                            <div class="text-right"><a href="auth-forgot-password.html" class="card-link">¿Olvidaste la contraseña?</a></div>
+                                            <div class="text-right"><a href="{{ route('forgot-password') }}" class="card-link">¿Olvidaste la contraseña?</a></div>
                                         </div>
                                         <div class="button-box text-center">
                                             <button type="submit" class="default-btn">Entrar</button>

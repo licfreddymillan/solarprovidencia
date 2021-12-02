@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="course-content">
-                                    <h3><a href="course-details.html">{{ $curso->title }}</a></h3>
+                                    <h3><a href="{{ route('user.course-resume', [$curso->slug, $curso->id]) }}">{{ $curso->title }}</a></h3>
                                     <p>{{ $curso->subtitle }}</p>
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-xs-6 text-left">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="course-content">
-                                    <h3><a href="course-details.html">{{ $cursoPendiente->course->title }}</a></h3>
+                                    <h3><a href="{{ route('courses.show', [$cursoPendiente->course->slug, $cursoPendiente->course->id]) }}">{{ $cursoPendiente->course->title }}</a></h3>
                                     <p>{{ $cursoPendiente->course->subtitle }}</p>
                                     <div class="pb-20"><label class="label label-warning">Esperando confirmación de transferencia</label></div>
 

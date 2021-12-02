@@ -25,6 +25,10 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('hom
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('index');
+Route::get('forgot-password', function(){
+    return view('auth.passwords.email');
+})->name('forgot-password');
+Route::post('reset-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'reset_password'])->name('reset-password');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'courses'], function () {
@@ -32,6 +36,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::post('store', [App\Http\Controllers\CourseController::class, 'store'])->name('admin.courses.store');
         Route::post('update', [App\Http\Controllers\CourseController::class, 'update'])->name('admin.courses.update');
         Route::get('delete/{id}', [App\Http\Controllers\CourseController::class, 'destroy'])->name('admin.courses.delete');
+        Route::get('users-list/{id}', [App\Http\Controllers\CourseController::class, 'users_list'])->name('admin.courses.users-list');
 
         Route::group(['prefix' => 'lessons'], function () {
             Route::get('/{course_id}', [App\Http\Controllers\LessonController::class, 'index'])->name('admin.courses.lessons');
@@ -50,6 +55,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('subscribers/{id}', [App\Http\Controllers\EventController::class, 'subscribers'])->name('admin.events.subscribers');
         Route::post('send-mail', [App\Http\Controllers\EventController::class, 'send_mail'])->name('admin.events.send-mail');
     });
+    
 
     Route::group(['prefix' => 'news'], function () {
         Route::get('/', [App\Http\Controllers\NewController::class, 'index'])->name('admin.news');

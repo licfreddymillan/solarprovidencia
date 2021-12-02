@@ -193,9 +193,10 @@
                         </div>
                     </td>
                     <td class="product-price">${{ $curso->price }}</td>
-                    <td class="product-action">
+                    <td class="product-action" style="text-align: center;">
                         <span style="font-size: 20px;"><a href="javascript:;" class="edit-course" data-course="{{$curso}}" title="Editar"><i class="feather icon-edit"></i></a></span>
                         <span style="font-size: 20px;"><a href="{{ route('admin.courses.lessons', $curso->id) }}" title="Ver Lecciones"><i class="feather icon-search"></i></a></span>
+                        <span style="font-size: 20px;"><a href="{{ route('admin.courses.users-list', $curso->id) }}" title="Ver Usuarios Inscritos"><i class="feather icon-user"></i></a></span>
                         @if ($curso->users_count == 0)
                             <span style="font-size: 20px;"><a href="javascript:;" class="delete-course" data-id="{{ $curso->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
                             <a href="{{ route('admin.courses.delete', $curso->id) }}" id="delete-link-{{$curso->id}}"></a>

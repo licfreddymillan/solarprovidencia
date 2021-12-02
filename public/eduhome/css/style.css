@@ -1264,7 +1264,7 @@ textarea {
 /*  5. Choose CSS
 /*----------------------------------------*/
 .choose-area{
-    background: url(../img/choose/choose-bd.jpg);
+    /*background: url(../img/choose/choose-bd.jpg);*/
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -1287,7 +1287,7 @@ textarea {
     width: 293px;
     height: 506px;
     content: "";
-    background: url(../img/choose/choose.png);
+    /*background: url(../img/choose/choose.png);*/
     background-repeat: no-repeat;
     z-index: 1;
 }
@@ -1792,7 +1792,7 @@ textarea {
 /*  8. Testimonial CSS
 /*----------------------------------------*/
 .testimonial-area{
-    background: url(../img/testimonial/testimonial-bg.jpg);
+    /*background: url(../img/testimonial/testimonial-bg.jpg);*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -1813,14 +1813,14 @@ textarea {
 .testimonial-area.three .testimonial-content p{color: #606060}
 .testimonial-area.three .testimonial-content h4, .testimonial-area.three .testimonial-content h5{color: #303030}
 .testimonial-img {
-    height: 77px;
+    /*height: 77px;*/
     margin: auto auto 28px;
-    width: 77px;
+    width: 200px;
 }
-.testimonial-img img{
+/*.testimonial-img img{
     border-radius: 50%;
     border: 1px solid #FFFFFF;
-}
+}*/
 .three .testimonial-img img{
     border: 1px solid #f1f1f1;
 }

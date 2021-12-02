@@ -171,6 +171,7 @@
                     <th>Lugar</th>
                     <th>Precio</th>
                     <th>Estado</th>
+                    <th>Suscriptores</th>
                     <th>Acción</th>
                 </tr>
             </thead>
@@ -191,13 +192,14 @@
                             </div>
                         </div>
                     </td>
+                    <td>{{ $evento->users_count }}</td>
                     <td class="product-action">
                         <span style="font-size: 20px;"><a href="javascript:;" class="edit-event" data-event="{{$evento}}" title="Editar"><i class="feather icon-edit"></i></a></span>
                         @if ($evento->users_count == 0)
                             <span style="font-size: 20px;"><a href="javascript:;" class="delete-event" data-id="{{ $evento->id }}" title="Eliminar"><i class="feather icon-trash"></i></a></span>
                             <a href="{{ route('admin.events.delete', $evento->id) }}" id="delete-link-{{$evento->id}}"></a>
                         @else
-                            <span style="font-size: 20px;"><a href="{{ route('admin.events.subscribers', $evento->id) }}" title="Ver Suscriptores"><i class="feather icon-search"></i></a></span>
+                            <span style="font-size: 20px;"><a href="{{ route('admin.events.subscribers', $evento->id) }}" title="Ver Suscriptores"><i class="feather icon-user"></i></a></span>
                         @endif
                     </td>
                 </tr>

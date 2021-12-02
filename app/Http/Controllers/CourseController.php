@@ -271,4 +271,14 @@ class CourseController extends Controller
         file_put_contents($path, $output);*/
         return $pdf->stream();
     }
+
+    public function users_list($id){
+        $curso = Course::where('id', '=', $id)
+                    ->with('users')
+                    ->first();
+        
+        $usuarios= $curso->users;
+        
+        return view('admin.usersList')->with(compact('usuarios', 'curso'));
+    }
 }

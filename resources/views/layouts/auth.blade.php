@@ -9,7 +9,7 @@
         <meta name="description" content="Solar Providencia">
         <meta name="keywords" content="solar, providencia, cursos, astrología">
         <meta name="author" content="SOLAR PROVIDENCIA">
-        <title>Solar Providencia</title>
+        <title>Academia Solar Providencia</title>
         <link rel="apple-touch-icon" href="{{ asset('admin-template/app-assets/images/ico/apple-icon-120.png') }}">
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('admin-template/app-assets/images/ico/favicon.ico') }}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
